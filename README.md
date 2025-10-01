@@ -1,8 +1,7 @@
 # 🎮 Simon Game
 
-A simple and fun memory game built with **HTML, CSS, and JavaScript**.  
-Test your memory by following the sequence of lights.  
-
+A classic **Simon Game** built with **HTML, CSS, and JavaScript**.  
+Test your memory by repeating the color sequences and see how high you can go!  
 ---
 
 ## 🚀 Live Demo
@@ -21,9 +20,13 @@ Test your memory by following the sequence of lights.
 ---
 
 ## ✨ Features
-- Responsive design for desktop and mobile
-- Scoreboard with **Current Level** and **High Score**
-- Start button works on both desktop and mobile
+- Responsive 2x2 grid layout (works on desktop & mobile)  
+- **Start button** for mobile and **key press** for desktop  
+- **Restart button** after Game Over  
+- **Current Level** and **High Score** tracking  
+- **High Score persists** even after page refresh  
+- **Sound effect plays only for the newly added color** in the sequence  
+- Smooth flash animations and hover effects  
 
 ---
 
