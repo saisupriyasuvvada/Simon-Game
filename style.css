@@ -97,6 +97,24 @@ body {
     opacity: 0.7;
   }
   
+  #restart-btn {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: #2ecc71;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  #restart-btn:hover {
+    background: #27ae60;
+  }
+  
+
   /* Responsive Design */
   @media (max-width: 768px) {
     h1 { font-size: 2rem; }

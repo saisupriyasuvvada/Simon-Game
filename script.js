@@ -1,99 +1,141 @@
+// ------------------ Variables ------------------
 let gameSeq = [];
 let userSeq = [];
-
 let started = false;
 let level = 0;
 
-let h2 = document.getElementById("status");
-function startGame() {
-    if (!started) {
-      started = true;
-      levelUp();
-      document.getElementById("start-btn").style.display = "none"; // hide button
-    }
-  }
-  
-  document.getElementById("start-btn").addEventListener("click", startGame);
-  
-let currentLevelEl = document.getElementById("current-level");
-let highScoreEl = document.getElementById("high-score");
+// Get high score from localStorage or 0
+let highScore = localStorage.getItem("simonHighScore") || 0;
 
-// Load saved high score
-let highScore = localStorage.getItem("highScore") || 0;
-highScoreEl.textContent = highScore;
+// DOM Elements
+let h2 = document.getElementById("status");
+let currentLevelDisplay = document.getElementById("current-level");
+let highScoreDisplay = document.getElementById("high-score");
+let startBtn = document.getElementById("start-btn"); // optional start button for mobile
+let restartBtn = document.getElementById("restart-btn");
+
+// Update initial displays
+currentLevelDisplay.innerText = level;
+highScoreDisplay.innerText = highScore;
 
 let btns = ["green", "yellow", "red", "blue"];
 
-document.addEventListener("keypress", function () {
-  if (!started) {
-    console.log("Game started");
+// ------------------ Functions ------------------
+
+// Flash button animation
+function btnFlash(btn) {
+    btn.classList.add("flash");
+    setTimeout(() => {
+        btn.classList.remove("flash");
+    }, 250);
+}
+
+// User flash on click
+function userFlash(btn) {
+    btn.classList.add("userFlash");
+    setTimeout(() => {
+        btn.classList.remove("userFlash");
+    }, 250);
+}
+
+// Play sound for new color only
+function playSound(color) {
+    let audio = new Audio(`sounds/${color}.mp3`);
+    audio.play();
+}
+
+// ------------------ Game Logic ------------------
+
+// Level up - add new color
+function levelUp() {
+    userSeq = [];
+    level++;
+    h2.innerText = `Level ${level}`;
+    currentLevelDisplay.innerText = level;
+
+    // Random new color
+    let randomIdx = Math.floor(Math.random() * btns.length);
+    let randomColor = btns[randomIdx];
+    let randombtn = document.querySelector(`#${randomColor}`);
+
+    gameSeq.push(randomColor);
+
+    btnFlash(randombtn);
+    playSound(randomColor); // sound only for new color
+}
+
+// Check user answer
+function checkAns(idx) {
+    if (userSeq[idx] === gameSeq[idx]) {
+        if (userSeq.length === gameSeq.length) {
+            setTimeout(levelUp, 1000);
+        }
+    } else {
+        h2.innerHTML = `Game Over! Your Score is <b>${level}</b>`;
+        document.body.style.backgroundColor = "red";
+        setTimeout(() => {
+            document.body.style.backgroundColor = "white";
+        }, 200);
+
+        // Update high score
+        if (level > highScore) {
+            highScore = level;
+            localStorage.setItem("simonHighScore", highScore);
+            highScoreDisplay.innerText = highScore;
+        }
+
+        restartBtn.style.display = "inline-block"; // show restart button
+        reset();
+    }
+}
+
+// Button click handler
+function btnpress() {
+    let btn = this;
+    userFlash(btn);
+    let userColor = btn.getAttribute("id");
+    userSeq.push(userColor);
+
+    checkAns(userSeq.length - 1);
+}
+
+// Reset game
+function reset() {
+    started = false;
+    userSeq = [];
+    gameSeq = [];
+    level = 0;
+    currentLevelDisplay.innerText = level;
+}
+
+// ------------------ Event Listeners ------------------
+
+// Add click listeners to all buttons
+let allBtns = document.querySelectorAll('.btn');
+for (let btn of allBtns) {
+    btn.addEventListener("click", btnpress);
+}
+
+// Optional Start button for mobile
+if (startBtn) {
+    startBtn.addEventListener("click", function () {
+        this.style.display = "none";
+        started = true;
+        levelUp();
+    });
+}
+
+// Restart button
+restartBtn.addEventListener("click", function () {
+    this.style.display = "none";
     started = true;
     levelUp();
-  }
 });
 
-function btnFlash(btn) {
-  btn.classList.add("flash");
-  setTimeout(() => btn.classList.remove("flash"), 300);
-}
-
-function userFlash(btn) {
-  btn.classList.add("userFlash");
-  setTimeout(() => btn.classList.remove("userFlash"), 300);
-}
-
-function levelUp() {
-  userSeq = [];
-  level++;
-  currentLevelEl.textContent = level;
-  h2.innerText = `Level ${level}`;
-
-  let randomIdx = Math.floor(Math.random() * btns.length);
-  let randomColor = btns[randomIdx];
-  let randombtn = document.getElementById(randomColor);
-
-  gameSeq.push(randomColor);
-  console.log("Game sequence:", gameSeq);
-
-  setTimeout(() => btnFlash(randombtn), 500);
-}
-
-function checkAns(idx) {
-  if (userSeq[idx] === gameSeq[idx]) {
-    if (userSeq.length === gameSeq.length) {
-      setTimeout(levelUp, 1000);
+// Start game on keyboard press (desktop)
+document.addEventListener("keypress", function () {
+    if (!started) {
+        started = true;
+        levelUp();
     }
-  } else {
-    h2.innerHTML = `Game Over! Score: <b>${level - 1}</b> <br> Press any key to Restart`;
-
-    if (level - 1 > highScore) {
-      highScore = level - 1;
-      localStorage.setItem("highScore", highScore);
-      highScoreEl.textContent = highScore;
-    }
-
-    document.body.style.backgroundColor = "red";
-    setTimeout(() => (document.body.style.backgroundColor = ""), 250);
-
-    reset();
-  }
-}
-
-function btnpress() {
-  let btn = this;
-  userFlash(btn);
-  let userColor = btn.getAttribute("id");
-  userSeq.push(userColor);
-  checkAns(userSeq.length - 1);
-}
-
-let allBtns = document.querySelectorAll(".btn");
-allBtns.forEach(btn => btn.addEventListener("click", btnpress));
-
-function reset() {
-  started = false;
-  userSeq = [];
-  gameSeq = [];
-  level = 0;
-  currentLevelEl.textContent = 0;
-}
+});
