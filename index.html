@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Simon Game</h1>
+  <h2 id="status">Press Start to play the GAME</h2>
+  <button id="start-btn">Start Game</button>
+
+
+  <!-- Responsive Scoreboard -->
+  <div class="score-container">
+    <div class="score-board">
+      <p>Current Level: <span id="current-level">0</span></p>
+    </div>
+    <div class="score-board">
+      <p>High Score: <span id="high-score">0</span></p>
+    </div>
+  </div>
+
+  <!-- Game Boxes -->
+  <div class="boxes">
+    <div class="box btn green" id="green"></div>
+    <div class="box btn red" id="red"></div>
+    <div class="box btn yellow" id="yellow"></div>
+    <div class="box btn blue" id="blue"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
