@@ -1,0 +1,126 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
+    color: #222;
+    min-height: 100vh;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  #start-btn {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease;
+  }
+  
+  #start-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Score Container */
+  .score-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 20px 20px;
+    flex-wrap: wrap;
+  }
+  
+  .score-board {
+    background: white;
+    padding: 5px 15px;       /* reduced padding */
+    border-radius: 8px;      /* slightly smaller corners */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* lighter shadow */
+    font-weight: bold;
+    font-size: 0.9rem;       /* smaller text */
+    margin: 5px;
+    flex: 1 1 40%;           /* smaller width on desktop */
+    text-align: center;
+  }
+  
+  
+  /* Boxes Container */
+  .boxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    column-gap: 15px; /* horizontal gap between green-yellow and red-blue */
+    row-gap: 20px;    /* vertical gap between rows */
+    justify-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Each Box */
+  .box {
+    height: 120px;
+    width: 120px;
+    border: 5px solid black;
+    border-radius: 20%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .box:hover {
+    transform: scale(1.05);
+  }
+  
+  .green { background-color: #2ecc71; }
+  .red { background-color: #e74c3c; }
+  .yellow { background-color: #f1c40f; }
+  .blue { background-color: #3498db; }
+  
+  /* Flash Effects */
+  .flash {
+    background-color: white !important;
+    opacity: 0.7;
+  }
+  
+  .userFlash {
+    opacity: 0.7;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1rem; }
+    .box {
+      height: 100px;
+      width: 100px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .score-board {
+        flex: 1 1 100%;   /* full width on small screens */
+        font-size: 0.85rem;
+        padding: 4px 10px;
+      }
+    .box {
+      height: 80px;
+      width: 80px;
+      row-gap: 15px;
+      column-gap: 10px;
+    }
+    .score-board {
+      flex: 1 1 100%;
+    }
+  }
+  
